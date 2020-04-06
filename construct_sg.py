@@ -31,8 +31,21 @@ def normalize(text):
 if __name__ == "__main__":
     # Group phrases
     es2ens = dict()
-    en_lines = open(hp.opus_en, 'r').read().splitlines()
-    es_lines = open(hp.opus_es, 'r').read().splitlines()
+    es_lines = []
+    en_lines = []
+    buff = 100000
+    with open(hp.opus_en, buffering=buff) as f:
+        i = 0
+        for row in f:
+            if(i == buff): break
+            en_lines.append(row)
+
+    with open(hp.opus_es, buffering=buff) as f:
+        i=0
+        for row in f:
+            if(i == buff): break
+            es_lines.append(row)
+
     for en, es in tqdm(zip(en_lines, es_lines), total=len(en_lines)):
         en = normalize(en)
         es = normalize(es)
